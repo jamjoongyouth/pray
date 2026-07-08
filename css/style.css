@@ -193,3 +193,78 @@ main {
 .notion-btn:active {
   transform: scale(0.97);
 }
+
+/* ── 사흘의 기도 ── */
+.day-list {
+  list-style: none;
+  display: grid;
+  gap: 12px;
+}
+
+.day-card {
+  background: var(--card);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+}
+
+.day-label {
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+.day-question {
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+/* ── 일정표 ── */
+.day-schedule {
+  background: var(--card);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius);
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.day-schedule summary {
+  padding: 18px 24px;
+  font-weight: 700;
+  color: var(--gold);
+  cursor: pointer;
+  list-style: none;
+}
+
+.day-schedule summary::-webkit-details-marker { display: none; }
+
+.day-schedule summary::after {
+  content: "▾";
+  float: right;
+  color: var(--ink-dim);
+  transition: transform 0.2s;
+}
+
+.day-schedule[open] summary::after { transform: rotate(180deg); }
+
+.time-list {
+  list-style: none;
+  padding: 0 24px 18px;
+  display: grid;
+  gap: 10px;
+}
+
+.time-list li {
+  display: flex;
+  gap: 16px;
+  line-height: 1.5;
+}
+
+.time-list .time {
+  color: var(--gold);
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+  width: 48px;
+}
