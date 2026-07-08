@@ -268,3 +268,30 @@ main {
   flex-shrink: 0;
   width: 48px;
 }
+
+/* ── 함께 만드는 사진첩 ── */
+.photos {
+  text-align: center;
+}
+
+.photos-desc {
+  color: var(--ink-dim);
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+.photo-btn {
+  display: inline-block;
+  padding: 15px 36px;
+  border-radius: 999px;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  font-weight: 700;
+  font-size: 1.05rem;
+  text-decoration: none;
+  transition: transform 0.15s;
+}
+
+.photo-btn:active {
+  transform: scale(0.97);
+}
