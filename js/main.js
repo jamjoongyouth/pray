@@ -24,11 +24,11 @@
   }, { passive: true });
 })();
 
-// 드라이브 갤러리: 공개 폴더의 이미지 목록을 읽어 그리드로 표시.
-// API_KEY가 비어 있으면 아무것도 하지 않음 (그리드 숨김, 버튼만 노출).
+// 드라이브 갤러리: 공개 폴더의 이미지 목록을 읽어 스와이프 캐러셀로 표시.
+// API_KEY가 비어 있으면 아무것도 하지 않음 (캐러셀 숨김, 버튼만 노출).
 (function () {
-  var grid = document.getElementById("photo-grid");
-  if (!grid) return;
+  var carousel = document.getElementById("photo-grid");
+  if (!carousel) return;
 
   var FOLDER_ID = "1JtS_8SzZGzlj1LxoTJoDX-SlgN7s1N3e";
   var API_KEY = "AIzaSyDYCXSH17rvI77rvE-yIVNLMyExHecK3uw"; // 리퍼러 제한: jamjoongyouth.github.io
@@ -48,12 +48,23 @@
         a.target = "_blank";
         a.rel = "noopener";
         var img = document.createElement("img");
-        img.src = "https://drive.google.com/thumbnail?id=" + f.id + "&sz=w400";
+        img.src = "https://drive.google.com/thumbnail?id=" + f.id + "&sz=w800";
         img.alt = f.name;
         img.loading = "lazy";
         a.appendChild(img);
-        grid.appendChild(a);
+        carousel.appendChild(a);
       });
+
+      var counter = document.getElementById("photo-counter");
+      if (counter) {
+        counter.hidden = false;
+        var update = function () {
+          var idx = Math.round(carousel.scrollLeft / carousel.offsetWidth);
+          counter.textContent = (idx + 1) + " / " + data.files.length;
+        };
+        update();
+        carousel.addEventListener("scroll", update, { passive: true });
+      }
     })
     .catch(function () {}); // 실패해도 페이지는 정상 동작
 })();

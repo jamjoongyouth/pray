@@ -296,23 +296,45 @@ main {
   transform: scale(0.97);
 }
 
-/* ── 사진첩 그리드 ── */
-.photo-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  margin-bottom: 24px;
+/* ── 사진첩 캐러셀 ── */
+.photo-carousel {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  border-radius: var(--radius);
+  margin-bottom: 12px;
 }
 
-.photo-grid:empty {
+.photo-carousel::-webkit-scrollbar {
   display: none;
 }
 
-.photo-grid img {
+.photo-carousel:empty {
+  display: none;
+}
+
+.photo-carousel a {
   width: 100%;
-  aspect-ratio: 1;
+  flex-shrink: 0;
+  scroll-snap-align: center;
+}
+
+.photo-carousel img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
-  border-radius: 12px;
+  border-radius: var(--radius);
   background: var(--card);
   display: block;
+}
+
+.photo-counter {
+  text-align: center;
+  color: var(--ink-dim);
+  font-size: 0.85rem;
+  margin-bottom: 20px;
+  font-variant-numeric: tabular-nums;
 }
