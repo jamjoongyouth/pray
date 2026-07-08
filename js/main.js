@@ -24,19 +24,28 @@
   }, { passive: true });
 })();
 
-// 드라이브 갤러리: 공개 폴더의 이미지 목록을 읽어 스와이프 캐러셀로 표시.
-// API_KEY가 비어 있으면 아무것도 하지 않음 (캐러셀 숨김, 버튼만 노출).
+// 드라이브 갤러리: 일자별 폴더의 사진을 날짜 탭으로 전환하며 표시.
+// API_KEY가 비어 있으면 아무것도 하지 않음 (버튼만 노출).
 (function () {
   var carousel = document.getElementById("photo-grid");
-  if (!carousel) return;
+  var tabsBox = document.getElementById("photo-tabs");
+  if (!carousel || !tabsBox) return;
 
-  var FOLDER_ID = "1JtS_8SzZGzlj1LxoTJoDX-SlgN7s1N3e";
   var API_KEY = "AIzaSyDYCXSH17rvI77rvE-yIVNLMyExHecK3uw"; // 리퍼러 제한: jamjoongyouth.github.io
   if (!API_KEY) return;
 
-  var url = "https://www.googleapis.com/drive/v3/files"
-    + "?q=" + encodeURIComponent("'" + FOLDER_ID + "' in parents and mimeType contains 'image/' and trashed = false")
-    + "&orderBy=createdTime desc&pageSize=60&fields=files(id,name)&key=" + API_KEY;
+  var DAYS = [
+    { label: "8/7 (금)", folderId: "1EKgNQXJ5wa1OhF-gf5gIXSMBEHWvMxXH" },
+    { label: "8/14 (금)", folderId: "1kfK6GrxQvVnBEA8c86AXibpwc7TEoUJR" },
+    { label: "8/21 (금)", folderId: "1as7h7UqsA8efuUtqgoYq7vhb7tUUCABN" },
+    { label: "8/23 (주일)", folderId: "1WWtna5J2MimMUItMwN8kJGDFasCYzjbK" }
+  ];
+
+  var gridAll = document.getElementById("photo-grid-all");
+  var counter = document.getElementById("photo-counter");
+  var toggle = document.getElementById("photo-toggle");
+  var upload = document.getElementById("photo-upload");
+  var cache = {};
 
   var makeItem = function (f) {
     var a = document.createElement("a");
@@ -51,35 +60,72 @@
     return a;
   };
 
-  fetch(url)
-    .then(function (res) { return res.json(); })
-    .then(function (data) {
-      if (!data.files || !data.files.length) return;
-      data.files.forEach(function (f) {
-        carousel.appendChild(makeItem(f));
-      });
+  var render = function (files) {
+    carousel.innerHTML = "";
+    carousel.hidden = false;
+    if (gridAll) {
+      gridAll.innerHTML = "";
+      gridAll.hidden = true;
+    }
+    if (toggle) {
+      toggle.hidden = files.length === 0;
+      toggle.textContent = "전체보기 ∨";
+    }
+    if (counter) {
+      counter.hidden = false;
+      counter.textContent = files.length
+        ? "사진 " + files.length + "장 · 옆으로 넘겨보세요"
+        : "아직 사진이 없어요 · 첫 사진을 올려주세요";
+    }
+    files.forEach(function (f) {
+      carousel.appendChild(makeItem(f));
+      if (gridAll) gridAll.appendChild(makeItem(f));
+    });
+  };
 
-      var counter = document.getElementById("photo-counter");
-      if (counter) {
-        counter.hidden = false;
-        counter.textContent = "사진 " + data.files.length + "장 · 옆으로 넘겨보세요";
-      }
+  var select = function (i) {
+    var day = DAYS[i];
+    tabsBox.querySelectorAll(".photo-tab").forEach(function (t, j) {
+      t.classList.toggle("active", j === i);
+    });
+    if (upload) {
+      upload.href = "https://drive.google.com/drive/folders/" + day.folderId;
+    }
+    if (cache[day.folderId]) {
+      render(cache[day.folderId]);
+      return;
+    }
+    var url = "https://www.googleapis.com/drive/v3/files"
+      + "?q=" + encodeURIComponent("'" + day.folderId + "' in parents and mimeType contains 'image/' and trashed = false")
+      + "&orderBy=createdTime desc&pageSize=60&fields=files(id,name)&key=" + API_KEY;
+    fetch(url)
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        cache[day.folderId] = data.files || [];
+        render(cache[day.folderId]);
+      })
+      .catch(function () {}); // 실패해도 페이지는 정상 동작
+  };
 
-      // 전체보기: 캐러셀 ↔ 격자 전환
-      var gridAll = document.getElementById("photo-grid-all");
-      var toggle = document.getElementById("photo-toggle");
-      if (gridAll && toggle) {
-        data.files.forEach(function (f) {
-          gridAll.appendChild(makeItem(f));
-        });
-        toggle.hidden = false;
-        toggle.addEventListener("click", function () {
-          var opening = gridAll.hidden;
-          gridAll.hidden = !opening;
-          carousel.hidden = opening;
-          toggle.textContent = opening ? "접기 ∧" : "전체보기 ∨";
-        });
-      }
-    })
-    .catch(function () {}); // 실패해도 페이지는 정상 동작
+  if (gridAll && toggle) {
+    toggle.addEventListener("click", function () {
+      var opening = gridAll.hidden;
+      gridAll.hidden = !opening;
+      carousel.hidden = opening;
+      toggle.textContent = opening ? "접기 ∧" : "전체보기 ∨";
+    });
+  }
+
+  DAYS.forEach(function (day, i) {
+    var tab = document.createElement("button");
+    tab.type = "button";
+    tab.className = "photo-tab";
+    tab.textContent = day.label;
+    tab.addEventListener("click", function () {
+      select(i);
+    });
+    tabsBox.appendChild(tab);
+  });
+
+  select(0);
 })();

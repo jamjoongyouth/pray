@@ -296,6 +296,34 @@ main {
   transform: scale(0.97);
 }
 
+/* ── 사진첩 날짜 탭 ── */
+.photo-tabs {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.photo-tab {
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: none;
+  color: var(--ink-dim);
+  font-family: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.photo-tab.active {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #1b1503;
+  font-weight: 700;
+}
+
 /* ── 사진첩 캐러셀 ── */
 .photo-carousel {
   display: flex;
