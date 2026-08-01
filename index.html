@@ -11,6 +11,9 @@
   <!-- 본문: Pretendard / 타이틀: Hahmlet / 주제 말씀: 마루 부리
        셋 다 unicode-range 서브셋이라 실제로 쓰인 글자 조각만 내려받는다.
        jsDelivr는 브랜치가 아닌 커밋 SHA로 고정 — 원본 리포가 바뀌어도 글꼴이 안 변하게. -->
+  <!-- 히어로 배경은 첫 화면이라 lazy가 아니다. NFC로 열자마자 보이도록 미리 받는다. -->
+  <link rel="preload" as="image" href="images/poster-main.webp">
+
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,7 +21,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@800&display=swap">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fonts-archive/MaruBuri@977eeff68d1d40bcef341f09c1f56cce1903bb8a/subsets/MaruBuri-dynamic-subset.css">
 
-  <link rel="stylesheet" href="css/style.css?v=4">
+  <link rel="stylesheet" href="css/style.css?v=5">
 </head>
 <body>
   <div class="stars" aria-hidden="true"></div>
@@ -97,10 +100,7 @@
     <section class="gallery" id="gallery">
       <h2 class="section-title">포스터 갤러리</h2>
       <div class="carousel" id="carousel">
-        <!-- TEMP-CONTENT: 실제 포스터 이미지로 교체 -->
-        <img src="images/poster-1.svg" alt="수련회 포스터 1" loading="lazy">
-        <img src="images/poster-2.svg" alt="수련회 포스터 2" loading="lazy">
-        <img src="images/poster-3.svg" alt="수련회 포스터 3" loading="lazy">
+        <img src="images/pray-light.webp" alt="기도빛 — 두 손 모아 기도하는 형상에서 빛이 퍼져나가는 그림" loading="lazy">
       </div>
       <div class="dots" id="dots" aria-label="포스터 넘기기"></div>
     </section>
@@ -127,6 +127,6 @@
     <p>청년교구 여름수련회 · 기도</p>
   </footer>
 
-  <script src="js/main.js?v=2"></script>
+  <script src="js/main.js?v=3"></script>
 </body>
 </html>

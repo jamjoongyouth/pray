@@ -18,10 +18,14 @@ NFC 키링을 찍으면 열리는 수련회 랜딩 페이지입니다.
 |---|---|
 | 교제내용 | 노션 페이지에서 직접 수정 (즉시 반영, 재배포 불필요) |
 | 말씀·날짜·문구 | `index.html`에서 해당 텍스트 수정 후 push |
-| 포스터 추가 | 이미지를 `images/`에 넣고(장당 300KB 이하 권장) `index.html`의 `.carousel`에 `<img>` 한 줄 추가 후 push — 도트는 자동 생성됨 |
+| 히어로 배경 | `images/poster-main.webp`를 같은 이름으로 교체 (정사각 이미지 권장 — `css/style.css`의 `.hero`가 `cover`로 깔음). 글씨가 안 읽히면 `.hero::before` 그라데이션 농도를 조절 |
+| 포스터 추가 | 이미지를 `images/`에 넣고(장당 300KB 이하 권장) `index.html`의 `.carousel`에 `<img>` 한 줄 추가 후 push — 도트는 자동 생성됨(2장 이상일 때만) |
 | 사진첩 그리드 | 드라이브 갤러리의 일자별 폴더에 올리면 해당 날짜 탭에 자동 표시 (js/main.js의 Drive API 키 필요) |
 
 수정 후 배포: `git add -A && git commit -m "..." && git push` → 1~2분 내 반영.
+
+> 이미지는 WebP로 넣으면 같은 화질에 용량이 1/3 수준입니다.
+> (원본 5MB JPEG → 1400px WebP q80 기준 약 100KB. NFC로 여는 모바일 페이지라 용량이 곧 로딩 시간입니다.)
 
 ## NFC 태그 기록 방법
 

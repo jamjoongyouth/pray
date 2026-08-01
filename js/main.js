@@ -5,6 +5,8 @@
   if (!carousel || !dotsBox) return;
 
   var slides = carousel.querySelectorAll("img");
+  if (slides.length < 2) return; // 1장뿐이면 도트가 의미 없다
+
   slides.forEach(function (_, i) {
     var dot = document.createElement("button");
     dot.className = "dot" + (i === 0 ? " active" : "");
