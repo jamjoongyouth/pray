@@ -11,7 +11,7 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-  font-family: "Pretendard", -apple-system, BlinkMacSystemFont,
+  font-family: "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont,
     "Apple SD Gothic Neo", "Malgun Gothic", "Segoe UI", sans-serif;
   color: var(--ink);
   background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
@@ -61,6 +61,7 @@ body {
 }
 
 .hero-title {
+  font-family: "Hahmlet", serif;
   font-size: 4rem;
   font-weight: 800;
   letter-spacing: 0.06em;
@@ -109,9 +110,10 @@ main {
 }
 
 .verse-text {
+  font-family: "Maru Buri", serif;
   font-size: 1.5rem;
-  font-weight: 700;
-  line-height: 1.6;
+  font-weight: 600;
+  line-height: 1.75;
   margin-bottom: 16px;
 }
 
