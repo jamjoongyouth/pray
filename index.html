@@ -21,7 +21,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@800&display=swap">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fonts-archive/MaruBuri@977eeff68d1d40bcef341f09c1f56cce1903bb8a/subsets/MaruBuri-dynamic-subset.css">
 
-  <link rel="stylesheet" href="css/style.css?v=9">
+  <link rel="stylesheet" href="css/style.css?v=10">
 </head>
 <body>
   <div class="stars" aria-hidden="true"></div>
@@ -130,6 +130,12 @@
     <p>청년교구 여름수련회 · 기도</p>
   </footer>
 
-  <script src="js/main.js?v=3"></script>
+  <!-- 사진첩 크게 보기. 배경·사진·X 어디를 눌러도 닫힌다 -->
+  <div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="사진 크게 보기">
+    <button class="lightbox-close" id="lightbox-close" type="button" aria-label="닫기">×</button>
+    <img id="lightbox-img" alt="">
+  </div>
+
+  <script src="js/main.js?v=4"></script>
 </body>
 </html>

@@ -131,3 +131,70 @@
 
   select(0);
 })();
+
+// 사진첩 라이트박스: 썸네일을 누르면 크게 띄우고, 다시 누르거나 X·Esc로 닫는다.
+// 썸네일은 드라이브 응답 후에 생기므로 document에 위임해서 잡는다.
+(function () {
+  var box = document.getElementById("lightbox");
+  var img = document.getElementById("lightbox-img");
+  if (!box || !img) return;
+
+  var lastFocus = null;
+  var token = 0; // 큰 이미지 로딩 중에 닫거나 다른 사진을 열면 이전 응답을 버린다
+
+  var open = function (fileId, alt, thumbSrc) {
+    var mine = ++token;
+
+    img.alt = alt || "";
+    img.src = thumbSrc; // 이미 받아둔 작은 썸네일이라 즉시 뜬다
+    img.classList.add("is-loading");
+
+    var full = new Image();
+    full.onload = function () {
+      if (mine !== token) return;
+      img.src = full.src;
+      img.classList.remove("is-loading");
+    };
+    full.onerror = function () {
+      if (mine !== token) return;
+      img.classList.remove("is-loading"); // 실패하면 작은 썸네일이라도 선명하게
+    };
+    full.src = "https://drive.google.com/thumbnail?id=" + fileId + "&sz=w1200";
+
+    box.hidden = false;
+    document.body.style.overflow = "hidden";
+    lastFocus = document.activeElement;
+    var closeBtn = document.getElementById("lightbox-close");
+    if (closeBtn) closeBtn.focus();
+  };
+
+  var close = function () {
+    token++;
+    box.hidden = true;
+    img.removeAttribute("src");
+    img.classList.remove("is-loading");
+    document.body.style.overflow = "";
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  };
+
+  document.addEventListener("click", function (e) {
+    if (!e.target.closest) return;
+    var link = e.target.closest(".photo-carousel a, .photo-grid a");
+    if (!link) return;
+    // 새 탭으로 열기(cmd/ctrl/shift 클릭)는 드라이브 원본으로 그대로 보낸다
+    if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+
+    var m = link.href.match(/\/file\/d\/([^/?#]+)/);
+    if (!m) return;
+    var thumb = link.querySelector("img");
+    e.preventDefault();
+    open(m[1], thumb ? thumb.alt : "", thumb ? thumb.src : "");
+  });
+
+  // 배경·사진·X 어디를 눌러도 닫힘 (X 클릭도 여기로 버블링된다)
+  box.addEventListener("click", close);
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !box.hidden) close();
+  });
+})();
