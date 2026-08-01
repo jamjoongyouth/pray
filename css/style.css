@@ -173,22 +173,22 @@ main {
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   border-radius: var(--radius);
-  /* 기본값 stretch면 비율이 다른 이미지들이 같은 높이로 늘어나 찌그러진다 */
+  /* 기본값 stretch가 슬라이드 높이를 건드리지 않도록 고정 */
   align-items: flex-start;
 }
 
 .carousel::-webkit-scrollbar { display: none; }
 
-/* 정사각(그림 2장)과 A4 세로(본당포스터)가 섞여 있다.
-   고정 비율 + cover면 본당포스터의 제목·교회명이 잘리고,
-   contain은 이미지가 박스를 못 채워 border-radius가 안 먹는다.
-   원본 비율 그대로 두는 게 유일하게 셋 다 온전한 방법. */
+/* 1:1 고정 프레임. 정사각 그림 2장과 A4 세로 본당포스터가 섞여 있어
+   cover로 채우면 포스터의 제목·교회명이 잘린다. contain으로 넣어
+   포스터는 좌우 여백을 두고 온전히 보이게 하고, 여백은 카드 배경이 받는다. */
 .carousel img {
   width: 100%;
-  height: auto;
   flex-shrink: 0;
   scroll-snap-align: center;
   border-radius: var(--radius);
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
   background: var(--card);
 }
 
