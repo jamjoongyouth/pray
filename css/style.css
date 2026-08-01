@@ -190,6 +190,9 @@ main {
   aspect-ratio: 1 / 1;
   object-fit: contain;
   background: var(--card);
+  /* 없으면 손가락을 튕겼을 때 관성이 중간 스냅 지점을 지나쳐 끝으로 날아간다.
+     (포스터가 3장이 되면서 드러남 — 2장일 땐 건너뛴 결과가 다음 장과 같았다) */
+  scroll-snap-stop: always;
 }
 
 .dots {
