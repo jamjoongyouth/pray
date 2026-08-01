@@ -231,7 +231,7 @@ main {
   margin-bottom: 24px;
 }
 
-.notion-btn {
+.fellowship-btn {
   display: inline-block;
   padding: 16px 36px;
   border-radius: 999px;
@@ -244,7 +244,7 @@ main {
   transition: transform 0.15s;
 }
 
-.notion-btn:active {
+.fellowship-btn:active {
   transform: scale(0.97);
 }
 
