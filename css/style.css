@@ -302,6 +302,31 @@ main {
   margin-bottom: 34px;
 }
 
+/* 한 페이지에 히든 질문과 인도 안내가 함께 들어간다 */
+.paper-sec:first-of-type {
+  margin-top: 34px;
+}
+
+.paper-sec + .paper-sec {
+  margin-top: 52px;
+}
+
+.paper-sec-label {
+  font-family: "Pretendard Variable", "Pretendard", sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.22em;
+  color: var(--gold);
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.paper-sec-lead {
+  text-align: center;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 22px;
+}
+
 .paper-card {
   background: var(--card);
   border: 1px solid rgba(255, 255, 255, 0.1);
