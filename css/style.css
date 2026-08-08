@@ -164,65 +164,6 @@ main {
   color: var(--ink-dim);
 }
 
-/* ── 포스터 갤러리 ── */
-.carousel {
-  display: flex;
-  gap: 12px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  border-radius: var(--radius);
-  /* 기본값 stretch가 슬라이드 높이를 건드리지 않도록 고정 */
-  align-items: flex-start;
-}
-
-.carousel::-webkit-scrollbar { display: none; }
-
-/* 1:1 고정 프레임. 정사각 그림 2장과 A4 세로 본당포스터가 섞여 있어
-   cover로 채우면 포스터의 제목·교회명이 잘린다. contain으로 넣어
-   포스터는 좌우 여백을 두고 온전히 보이게 하고, 여백은 카드 배경이 받는다. */
-.carousel img {
-  width: 100%;
-  flex-shrink: 0;
-  scroll-snap-align: center;
-  border-radius: var(--radius);
-  aspect-ratio: 1 / 1;
-  object-fit: contain;
-  background: var(--card);
-  /* 없으면 손가락을 튕겼을 때 관성이 중간 스냅 지점을 지나쳐 끝으로 날아간다.
-     (포스터가 3장이 되면서 드러남 — 2장일 땐 건너뛴 결과가 다음 장과 같았다) */
-  scroll-snap-stop: always;
-}
-
-.dots {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 16px;
-}
-
-/* 슬라이드가 1장이면 JS가 도트를 안 만든다 — 빈 여백까지 없앤다 */
-.dots:empty {
-  display: none;
-}
-
-.dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  border: none;
-  padding: 0;
-  background: rgba(255, 255, 255, 0.25);
-  cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
-}
-
-.dot.active {
-  background: var(--gold);
-  transform: scale(1.25);
-}
-
 /* ── 교제 내용 ── */
 .fellowship {
   text-align: center;

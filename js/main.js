@@ -1,31 +1,3 @@
-// 캐러셀 도트: img 개수만큼 생성, 스크롤 위치에 따라 활성 표시
-(function () {
-  var carousel = document.getElementById("carousel");
-  var dotsBox = document.getElementById("dots");
-  if (!carousel || !dotsBox) return;
-
-  var slides = carousel.querySelectorAll("img");
-  if (slides.length < 2) return; // 1장뿐이면 도트가 의미 없다
-
-  slides.forEach(function (_, i) {
-    var dot = document.createElement("button");
-    dot.className = "dot" + (i === 0 ? " active" : "");
-    dot.setAttribute("aria-label", "포스터 " + (i + 1));
-    dot.addEventListener("click", function () {
-      carousel.scrollTo({ left: slides[i].offsetLeft, behavior: "smooth" });
-    });
-    dotsBox.appendChild(dot);
-  });
-
-  var dots = dotsBox.querySelectorAll(".dot");
-  carousel.addEventListener("scroll", function () {
-    var idx = Math.round(carousel.scrollLeft / carousel.offsetWidth);
-    dots.forEach(function (d, i) {
-      d.classList.toggle("active", i === idx);
-    });
-  }, { passive: true });
-})();
-
 // 드라이브 갤러리: 일자별 폴더의 사진을 날짜 탭으로 전환하며 표시.
 // API_KEY가 비어 있으면 아무것도 하지 않음 (버튼만 노출).
 (function () {
