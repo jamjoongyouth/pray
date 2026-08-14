@@ -287,6 +287,109 @@ main {
   margin-top: 20px;
 }
 
+/* 회차 질문지 — 문항이 길고 여러 개라 .paper-q(가운데 정렬)와 달리 왼쪽 정렬한다.
+   번호 배지와 분류 태그가 머리줄에 나란히 서고 그 아래 문항이 온다. */
+.paper-tag {
+  display: inline-block;
+  font-family: "Pretendard Variable", "Pretendard", sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  color: var(--gold);
+  border: 1px solid rgba(232, 200, 116, 0.4);
+  border-radius: 999px;
+  padding: 5px 13px;
+  margin-bottom: 24px;
+}
+
+.paper-qlist {
+  list-style: none;
+  display: grid;
+  gap: 28px;
+}
+
+.paper-item-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.paper-num {
+  font-family: "Pretendard Variable", "Pretendard", sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  color: #1b1503;
+  background: var(--gold);
+  border-radius: 999px;
+  padding: 4px 11px;
+}
+
+.paper-item-tag {
+  font-family: "Pretendard Variable", "Pretendard", sans-serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+}
+
+.paper-qtext {
+  font-size: 1.1rem;
+  line-height: 1.85;
+}
+
+.paper-sub {
+  margin-top: 10px;
+  color: var(--ink-dim);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+/* 종이 질문지의 형광펜 자리. 밝은 노랑을 그대로 쓰면 밤하늘 배경에서 튀어서,
+   금색을 옅게 깔고 글자만 밝힌다.
+   좌우 여백은 음수 마진으로 상쇄한다 — 안 그러면 '요인 은'처럼 조사 앞에 틈이 벌어진다. */
+.paper-qtext mark,
+.paper-sub mark {
+  background: rgba(232, 200, 116, 0.18);
+  color: #f7e6bb;
+  padding: 2px 4px;
+  margin: 0 -3px;
+  border-radius: 4px;
+}
+
+/* 지난 회차는 접어둔다 — 오늘 볼 것이 먼저다 */
+.paper-past {
+  margin-top: 52px;
+}
+
+.paper-past summary {
+  cursor: pointer;
+  list-style: none;
+  text-align: center;
+  font-family: "Pretendard Variable", "Pretendard", sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  color: var(--ink-dim);
+  padding: 13px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+}
+
+/* 눌리는 줄이라는 표시. 열리면 화살표가 뒤집힌다 */
+.paper-past summary::after {
+  content: " ∨";
+  color: var(--gold);
+}
+
+.paper-past[open] summary::after {
+  content: " ∧";
+}
+
+.paper-past summary::-webkit-details-marker { display: none; }
+
+.paper-past[open] summary {
+  margin-bottom: 12px;
+}
+
 .paper-steps {
   list-style: none;
   counter-reset: step;
