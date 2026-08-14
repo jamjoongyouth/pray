@@ -63,7 +63,9 @@
     </section>
     <section class="schedule" id="schedule">
       <h2 class="section-title">일정표</h2>
-      <details class="day-schedule" open>
+      <!-- data-date로 JS가 오늘에 해당하는 날을 펼친다. JS가 죽어도 되도록
+           현재 진행 중인 날에 open을 직접 달아 둔다. -->
+      <details class="day-schedule" data-date="2026-08-07">
         <summary>8월 7일 (금)</summary>
         <ul class="time-list">
           <li><span class="time">18:30</span><span>식사 및 교제</span></li>
@@ -72,7 +74,7 @@
           <li><span class="time">22:00</span><span>자유교제</span></li>
         </ul>
       </details>
-      <details class="day-schedule">
+      <details class="day-schedule" data-date="2026-08-14" open>
         <summary>8월 14일 (금)</summary>
         <ul class="time-list">
           <li><span class="time">18:30</span><span>식사 및 교제</span></li>
@@ -81,7 +83,7 @@
           <li><span class="time">22:00</span><span>자유교제</span></li>
         </ul>
       </details>
-      <details class="day-schedule">
+      <details class="day-schedule" data-date="2026-08-21">
         <summary>8월 21일 (금)</summary>
         <ul class="time-list">
           <li><span class="time">18:30</span><span>식사 및 교제</span></li>
@@ -90,7 +92,7 @@
           <li><span class="time">22:00</span><span>자유교제</span></li>
         </ul>
       </details>
-      <details class="day-schedule">
+      <details class="day-schedule" data-date="2026-08-23">
         <summary>8월 23일 (주일)</summary>
         <ul class="time-list">
           <li><span class="time">11:00</span><span>글램핑 및 교제 · 무수아취 (오후 5시 30분까지)</span></li>

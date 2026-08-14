@@ -1,3 +1,22 @@
+// 오늘 날짜(방문자 로컬 기준)를 YYYY-MM-DD로. 사진첩 탭과 일정표가 함께 쓴다.
+// UTC로 만들면 한국 새벽에 날짜가 하루 밀리므로 로컬 값만 조합한다.
+function prayToday() {
+  var d = new Date();
+  var pad = function (n) { return (n < 10 ? "0" : "") + n; };
+  return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
+}
+
+// 지난 날짜를 계속 덮어써서 "오늘 또는 가장 최근에 지난 날"이 남는다.
+// 수련회 시작 전이면 0(첫날), 다 끝난 뒤면 마지막 날.
+function prayDefaultIndex(dates) {
+  var today = prayToday();
+  var idx = 0;
+  for (var i = 0; i < dates.length; i++) {
+    if (dates[i] <= today) idx = i;
+  }
+  return idx;
+}
+
 // 드라이브 갤러리: 일자별 폴더의 사진을 날짜 탭으로 전환하며 표시.
 // API_KEY가 비어 있으면 아무것도 하지 않음 (버튼만 노출).
 (function () {
@@ -9,10 +28,10 @@
   if (!API_KEY) return;
 
   var DAYS = [
-    { label: "8/7", folderId: "1EKgNQXJ5wa1OhF-gf5gIXSMBEHWvMxXH" },
-    { label: "8/14", folderId: "1kfK6GrxQvVnBEA8c86AXibpwc7TEoUJR" },
-    { label: "8/21", folderId: "1as7h7UqsA8efuUtqgoYq7vhb7tUUCABN" },
-    { label: "8/23", folderId: "1WWtna5J2MimMUItMwN8kJGDFasCYzjbK" }
+    { label: "8/7", date: "2026-08-07", folderId: "1EKgNQXJ5wa1OhF-gf5gIXSMBEHWvMxXH" },
+    { label: "8/14", date: "2026-08-14", folderId: "1kfK6GrxQvVnBEA8c86AXibpwc7TEoUJR" },
+    { label: "8/21", date: "2026-08-21", folderId: "1as7h7UqsA8efuUtqgoYq7vhb7tUUCABN" },
+    { label: "8/23", date: "2026-08-23", folderId: "1WWtna5J2MimMUItMwN8kJGDFasCYzjbK" }
   ];
 
   var gridAll = document.getElementById("photo-grid-all");
@@ -101,7 +120,22 @@
     tabsBox.appendChild(tab);
   });
 
-  select(0);
+  select(prayDefaultIndex(DAYS.map(function (d) { return d.date; })));
+})();
+
+// 일정표: 오늘에 해당하는 날만 펼친다 (HTML의 open은 JS 없는 경우의 대비).
+(function () {
+  var items = Array.prototype.slice.call(
+    document.querySelectorAll(".day-schedule[data-date]")
+  );
+  if (!items.length) return;
+
+  var target = items[prayDefaultIndex(items.map(function (el) {
+    return el.getAttribute("data-date");
+  }))];
+  items.forEach(function (el) {
+    el.open = el === target;
+  });
 })();
 
 // 사진첩 라이트박스: 썸네일을 누르면 크게 띄우고, 다시 누르거나 X·Esc로 닫는다.
