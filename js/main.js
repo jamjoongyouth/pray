@@ -6,13 +6,18 @@ function prayToday() {
   return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
 }
 
-// 지난 날짜를 계속 덮어써서 "오늘 또는 가장 최근에 지난 날"이 남는다.
-// 수련회 시작 전이면 0(첫날), 다 끝난 뒤면 마지막 날.
+// 오늘과 날짜 차이가 가장 작은 날. 모임 며칠 전부터 다음 모임이 열려 있고,
+// 시작 전이면 첫날, 다 끝난 뒤면 마지막 날이 된다.
+// 앞뒤 거리가 같으면 지난 날을 남긴다 (사진첩은 이미 올라온 쪽이 유용하다).
+function prayDayGap(date, today) {
+  return Math.abs(Date.parse(date) - Date.parse(today)) / 86400000;
+}
+
 function prayDefaultIndex(dates) {
   var today = prayToday();
   var idx = 0;
-  for (var i = 0; i < dates.length; i++) {
-    if (dates[i] <= today) idx = i;
+  for (var i = 1; i < dates.length; i++) {
+    if (prayDayGap(dates[i], today) < prayDayGap(dates[idx], today)) idx = i;
   }
   return idx;
 }
